@@ -1,0 +1,11 @@
+<google colab>
+
+from google.colab import drive
+drive.mount("/content/drive")
+DATA_PATH = '/content/drive/MyDrive/Colab Notebooks/2024_2025/imbank/'
+import pandas as pd
+import seaborn as sns
+iris = sns.load_dataset("iris")
+iris.head(1)
+iris.to_csv(DATA_PATH + "iris_240930.csv", index=False)
+iris.to_excel(DATA_PATH + "iris_excel_240930.xlsx", index=False)
