@@ -2,6 +2,9 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn
 
+df1 = pd.read_excel("C:/0924_test/1004_test/ss_ex_1.xlsx")
+df1.info()
+print(df1)
 
 # 문제 1.
 """
