@@ -48,3 +48,5 @@ result = df.groupby("테마")[["PER", "PBR"]].mean()
 print(df.groupby("테마").get_group("2차전지(생산)"))
 print(df.groupby("테마").get_group("해운"))
 print(df.groupby("테마").get_group("시스템반도체"))
+
+result.to_excel("output/문제1.xlsx", index=False)
