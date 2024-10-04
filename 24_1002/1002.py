@@ -29,24 +29,55 @@ from pandas import DataFrame
 
 from pandas import DataFrame
 
-data = [
-    ["2차전지(생산)", "SK이노베이션", 10.19, 1.29],
-    ["해운", "팬오션", 21.23, 0.95],
-    ["시스템반도체", "티엘아이", 35.97, 1.12],
-    ["해운", "HMM", 21.52, 3.20],
-    ["시스템반도체", "아이에이", 37.32, 3.55],
-    ["2차전지(생산)", "LG화학", 83.06, 3.75]
-]
+#data = [
+#    ["2차전지(생산)", "SK이노베이션", 10.19, 1.29],
+#    ["해운", "팬오션", 21.23, 0.95],
+#    ["시스템반도체", "티엘아이", 35.97, 1.12],
+#    ["해운", "HMM", 21.52, 3.20],
+#    ["시스템반도체", "아이에이", 37.32, 3.55],
+#    ["2차전지(생산)", "LG화학", 83.06, 3.75]
+#]
 
-columns = ["테마", "종목명", "PER", "PBR"]
-df = DataFrame(data=data, columns=columns)
+#columns = ["테마", "종목명", "PER", "PBR"]
+#df = DataFrame(data=data, columns=columns)
 #print(df)
 
-result = df.groupby("테마")[["PER", "PBR"]].mean()
+#result = df.groupby("테마")[["PER", "PBR"]].mean()
 #print(result, type(result))
 
-print(df.groupby("테마").get_group("2차전지(생산)"))
-print(df.groupby("테마").get_group("해운"))
-print(df.groupby("테마").get_group("시스템반도체"))
+#print(df.groupby("테마").get_group("2차전지(생산)"))
+#print(df.groupby("테마").get_group("해운"))
+#print(df.groupby("테마").get_group("시스템반도체"))
 
-result.to_excel("output/문제1.xlsx", index=False)
+#result.to_excel("output/문제1.xlsx", index=False)
+
+import pandas as pd
+from pandas import DataFrame
+df = pd.read_excel("C:\\0924_test\\24_1002\\ss_ex_1.xlsx", parse_dates=['일자'], index_col=0)
+#print(df.head())
+
+df = df.reset_index()
+#print(df.head(1))
+#print(df.info())
+
+# column 추가
+df['분기'] = df['일자'].dt.quarter
+df['연도'] = df['일자'].dt.year
+df['월'] = df['일자'].dt.month
+df['일'] = df['일자'].dt.day
+
+print(df.head(1))
+
+# result = df.groupby(['연도', '월']).get_group((2021, 2))
+# print(result)
+result = df.groupby(['연도', '월'])['시가'].mean()
+# print(result)
+multiples = {
+    "시가": "first", 
+    "저가": min, 
+    "고가" : max, 
+    "종가" : 'last'
+}
+result = df.groupby(['연도', '분기', '월']).agg(multiples)
+print(result)
+print(result.reset_index())
