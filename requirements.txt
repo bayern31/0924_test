@@ -7,3 +7,8 @@ scipy
 scikit-learn
 jupyterlab
 plotly
+yfinance
+streamlit
+pingouin
+statsmodels
+scipy
